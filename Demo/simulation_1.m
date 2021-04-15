@@ -1,5 +1,5 @@
 %SIMULATION_1 - Detect communities of a simulated network generated using MLGM
-%benchmark. The simulated network has transition probability(set to 0.9)
+%benchmark. The simulated network has transition probability(set to 0.9) and
 %number of communities(set to 4) stationary across time. In the paper, number
 %of nodes is set 128, mixing coefficient varies and minimum and maximum
 %degrees of power law distribution respectively set to 8 and 16. Exponent of
@@ -70,13 +70,13 @@ for r=1:n_runs
     
     % calculate nmi and number of communities: ignores disconnected nodes during
     % calculations
-    for t=1:num_times
+    for t=1:n_times
         conn_nodes = sum(A{t}) ~= 0; 
         
-        nmi_on(r, t) = nmi(g_on{t}(conn_nodes), gt(conn_nodes, t));
+        nmi_on(r, t) = calc_nmi(g_on{t}(conn_nodes), gt(conn_nodes, t));
         nc_on(r, t) = length(unique(g_on{t}(conn_nodes)));
         
-        nmi_off(r, t) = nmi(g_off{t}(conn_nodes), gt(conn_nodes, t));
+        nmi_off(r, t) = calc_nmi(g_off{t}(conn_nodes), gt(conn_nodes, t));
         nc_off(r, t)=length(unique(g_off{t}(conn_nodes)));
     end
     
@@ -87,28 +87,36 @@ for r=1:n_runs
 end
 
 %% Plot the results
+f = figure();
+
+% Enlarge the figure to have 2 side by side subplots
+f.Position(1) = f.Position(1) - f.Position(3)/2;
+f.Position(3) = 2*f.Position(3);
+
 subplot(1,2,1);
-errorbar(1:n_times, mean(nmi_on, 1), std(nmi_on, [], 1), ...
-    'DisplayName', '$\mathrm{DSC}_{on}$', 'LineWidth', 0.75);
+plot(1:n_times, mean(nmi_on, 1), 'DisplayName', '$\mathrm{DSC}_{on}$', ...
+    'LineWidth', 1, 'Marker', 'o', 'MarkerFaceColor', 'auto');
 hold on;
-errorbar(1:n_times, mean(nmi_off, 1), std(nmi_off, [], 1), ...
-    'DisplayName', '$\mathrm{DSC}_{off}$', 'LineWidth', 0.75);
+plot(1:n_times, mean(nmi_off, 1), 'DisplayName', '$\mathrm{DSC}_{off}$', ...
+    'LineWidth', 1, 'Marker', 'o', 'MarkerFaceColor', 'auto');
 l = legend;
 l.Interpreter = 'latex';
 l.Location = 'southeast';
 title('NMI as a function of time', 'Interpreter', 'latex');
 xlabel('Time', 'Interpreter', 'latex');
-title('NMI', 'Interpreter', 'latex');
+ylabel('NMI', 'Interpreter', 'latex');
+grid;
 
 subplot(1,2,2);
-errorbar(1:n_times, mean(nc_on, 1), std(nc_on, [], 1), ...
-    'DisplayName', '$\mathrm{DSC}_{on}$', 'LineWidth', 0.75);
+plot(1:n_times, mean(nc_on, 1), 'DisplayName', '$\mathrm{DSC}_{on}$', ...
+    'LineWidth', 1, 'Marker', 'o', 'MarkerFaceColor', 'auto');
 hold on;
-errorbar(1:n_times, mean(nc_off, 1), std(nc_off, [], 1), ...
-    'DisplayName', '$\mathrm{DSC}_{off}$', 'LineWidth', 0.75);
+plot(1:n_times, mean(nc_off, 1), 'DisplayName', '$\mathrm{DSC}_{off}$', ...
+    'LineWidth', 1, 'Marker', 'o', 'MarkerFaceColor', 'auto');
 l = legend;
 l.Interpreter = 'latex';
 l.Location = 'southeast';
 title('Estimated number of communities', 'Interpreter', 'latex');
 xlabel('Time', 'Interpreter', 'latex');
-title('Number of communities', 'Interpreter', 'latex');
+ylabel('Number of communities', 'Interpreter', 'latex');
+grid;

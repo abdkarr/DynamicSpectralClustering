@@ -1,4 +1,4 @@
-function output = calc_asurprise(A, C)
+function asurprises = calc_asurprise(A, C)
 %CALC_ASURPRISE - Calculate asymptotic suprise of each community structure in a
 %set of community structures of an undirected graph as defined in [1].
 %
@@ -41,11 +41,11 @@ asurprises = zeros(k, 1);
 
 for c=1:k
     sizes = get_comm_sizes(C(:, c));
-    in_pairs = trace(sizes*(sizes-1))/2; % number of intra-community node pairs
+    in_pairs = trace(sizes*(sizes-1)')/2; % number of intra-community node pairs
     m_in = sum(calc_inner_weights(A, C(:, c))); % number of intra-community edges
     
-    q = m_in/num_edges; % observed intra-community edge fraction
-    q_avg = in_pairs/tot_pairs; % expected intra-community edge fraction
+    q = m_in/m; % observed intra-community edge fraction
+    q_avg = in_pairs/M; % expected intra-community edge fraction
     
     % KL divergence between q, q_avg
     asurprises(c) = m*(q*log((q+eps)/(q_avg+eps))+(1-q)*log((1-q+eps)/(1-q_avg+eps)));

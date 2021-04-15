@@ -27,6 +27,8 @@ function thetas = estimate_thetas(A, C)
 %   Copyright (c) 2020, Abdullah Karaaslanli
 %   All rights reserved.
 
+assigned_nodes = C ~= -1;
+
 degrees = sum(A, 2); 
 m = sum(degrees(assigned_nodes))/2; % number of edges
 

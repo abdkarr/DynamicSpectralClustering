@@ -49,7 +49,7 @@ for i=1:length(K)
         [~, eig_indx] = maxk(e, K(i));
     end
     
-    C(:, i) = kmeans(V(:, eig_indx), K(i), 'Replicates', 10);
+    C(:, i) = kmeans(V(:, eig_indx), K(i), 'Replicates', 20);
 end
 
 end
