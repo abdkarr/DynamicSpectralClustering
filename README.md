@@ -3,4 +3,4 @@ Matlab implementation of online and offline dynamic spectral clustering as descr
 
 
 ### References
-  - [1] [Karaaslanlı, Abdullah, and Selin Aviyente. "Community Detection in Dynamic Networks: Equivalence Between Stochastic Blockmodels and Evolutionary Spectral Clustering." IEEE Transactions on Signal and Information Processing over Networks 7 (2021): 130-143.] (https://ieeexplore.ieee.org/abstract/document/9328231)
+  - [1] [Karaaslanlı, Abdullah, and Selin Aviyente. "Community Detection in Dynamic Networks: Equivalence Between Stochastic Blockmodels and Evolutionary Spectral Clustering." IEEE Transactions on Signal and Information Processing over Networks 7 (2021): 130-143.](https://ieeexplore.ieee.org/abstract/document/9328231)
